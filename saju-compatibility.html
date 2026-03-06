@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合婚命理 · Couples Saju Reading</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Her palette — warm gold/amber */
+  --her: #9a6f1e;
+  --her-light: #c49a35;
+  --her-pale: #fdf6e8;
+  --her-border: #e0c880;
+
+  /* Him palette — forest green */
+  --him: #2e6b22;
+  --him-light: #4e9a3a;
+  --him-pale: #f0f7ec;
+  --him-border: #a8d490;
+
+  /* Shared neutral */
+  --bg: #fafaf7;
+  --bg-card: #ffffff;
+  --ink: #1a1a14;
+  --ink-soft: #3a3a2e;
+  --ink-muted: #6a6a58;
+  --border: #e0ddd4;
+  --border-light: #eeebe3;
+
+  /* Element colors */
+  --fire:  #b03020;
+  --earth: #8a6010;
+  --metal: #3a5a6a;
+  --water: #1a4e7a;
+  --wood:  #2e6b22;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Lato', Georgia, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* ===== HERO HEADER ===== */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* Split background — her gold left, his green right */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(154,111,30,0.25) 0%,
+    rgba(154,111,30,0.08) 42%,
+    rgba(46,107,34,0.08) 58%,
+    rgba(46,107,34,0.25) 100%
+  );
+  pointer-events: none;
+}
+
+/* Decorative grid lines */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.03) 59px, rgba(255,255,255,0.03) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.03) 59px, rgba(255,255,255,0.03) 60px);
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-cn {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1rem;
+  letter-spacing: 0.6rem;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.hero-names {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.05rem;
+}
+
+.hero-name.her { color: var(--her-light); }
+.hero-name.him { color: #7abf68; }
+
+.hero-symbol {
+  font-size: 2rem;
+  color: rgba(255,255,255,0.25);
+  font-family: 'Noto Serif TC', serif;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  letter-spacing: 0.4rem;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+/* Identity tags under names */
+.hero-identity {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.id-tag {
+  text-align: center;
+}
+
+.id-chinese {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.id-chinese.her { color: var(--her-light); }
+.id-chinese.him { color: #7abf68; }
+
+.id-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2.5rem 0 0;
+  color: rgba(255,255,255,0.15);
+}
+.hero-divider::before, .hero-divider::after {
+  content: '';
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+}
+.hero-divider span {
+  font-size: 0.8rem;
+  letter-spacing: 0.3rem;
+  color: rgba(255,255,255,0.25);
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+/* ===== NAV BAR ===== */
+.nav {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.nav-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-item {
+  padding: 1rem 1.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+.nav-item:hover {
+  color: var(--ink);
+  border-bottom-color: var(--border);
+}
+
+/* ===== PAGE LAYOUT ===== */
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+/* ===== SECTION WRAPPER ===== */
+.section {
+  margin: 4rem 0;
+  animation: fadeUp 0.6s ease both;
+}
+
+.section:nth-child(1) { animation-delay: 0.05s; }
+.section:nth-child(2) { animation-delay: 0.10s; }
+.section:nth-child(3) { animation-delay: 0.15s; }
+.section:nth-child(4) { animation-delay: 0.20s; }
+.section:nth-child(5) { animation-delay: 0.25s; }
+.section:nth-child(6) { animation-delay: 0.30s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section-num {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.6rem;
+  color: var(--border);
+  line-height: 1;
+  min-width: 2rem;
+}
+
+.section-title-wrap { flex: 1; }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-top: 0.2rem;
+  font-family: 'Lato', sans-serif;
+}
+
+/* ===== DUAL CARD LAYOUT ===== */
+.dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 640px) { .dual { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 1.6rem 1.8rem;
+  position: relative;
+}
+
+.card.her-card {
+  border-top: 3px solid var(--her-light);
+}
+
+.card.him-card {
+  border-top: 3px solid var(--him-light);
+}
+
+.card-who {
+  font-size: 0.65rem;
+  letter-spacing: 0.35rem;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+.card-who.her { color: var(--her); }
+.card-who.him { color: var(--him); }
+
+.card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
+
+.card p {
+  font-size: 0.97rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+.card p + p { margin-top: 0.7rem; }
+
+/* ===== CENTER / SYNTHESIS CARD ===== */
+.center-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.8rem 2rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+
+.center-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--her-light), var(--him-light));
+  border-radius: 4px 4px 0 0;
+}
+
+.center-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.9rem;
+}
+
+.center-card p {
+  font-size: 0.97rem;
+  line-height: 1.9;
+  color: var(--ink-soft);
+}
+
+.center-card p + p { margin-top: 0.8rem; }
+
+/* ===== HIGHLIGHT ===== */
+.hl-her   { color: var(--her); font-weight: 400; font-style: italic; }
+.hl-him   { color: var(--him); font-weight: 400; font-style: italic; }
+.hl-both  { color: var(--ink); font-weight: 600; }
+
+/* ===== COMPATIBILITY SCORE ===== */
+.compat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 640px) { .compat-grid { grid-template-columns: 1fr 1fr; } }
+
+.compat-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  padding: 1.2rem 1rem;
+  text-align: center;
+}
+
+.compat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.25rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 0.8rem;
+  font-family: 'Lato', sans-serif;
+}
+
+.compat-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.compat-score.high  { color: var(--him); }
+.compat-score.mid   { color: var(--her); }
+.compat-score.grow  { color: var(--ink-muted); }
+
+.compat-desc {
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.05rem;
+  line-height: 1.5;
+}
+
+/* ===== ELEMENT COMPARISON ===== */
+.element-comparison {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 1.8rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.elem-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 40px 1fr 90px;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.elem-label {
+  font-size: 0.8rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+.elem-label.her-label { text-align: right; color: var(--her); }
+.elem-label.him-label { text-align: left;  color: var(--him); }
+
+.elem-name {
+  font-size: 0.72rem;
+  text-align: center;
+  letter-spacing: 0.1rem;
+  font-family: 'Lato', sans-serif;
+  color: var(--ink-muted);
+}
+
+.bar-wrap {
+  display: flex;
+  gap: 3px;
+}
+
+.her-bar-wrap { justify-content: flex-end; }
+.him-bar-wrap { justify-content: flex-start; }
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot.her-dot   { background: var(--her-light); }
+.dot.him-dot   { background: var(--him-light); }
+.dot.empty-her { background: rgba(196,154,53,0.18); }
+.dot.empty-him { background: rgba(78,154,58,0.18); }
+
+/* ===== QUOTE ===== */
+.quote {
+  border-left: 3px solid;
+  padding: 1.2rem 1.6rem;
+  margin: 1.5rem 0;
+  border-radius: 0 3px 3px 0;
+  background: var(--bg-card);
+}
+
+.quote.her-quote { border-color: var(--her-light); }
+.quote.him-quote { border-color: var(--him-light); }
+.quote.both-quote {
+  border: none;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  padding: 1.6rem 2rem;
+  background: var(--bg);
+}
+
+.quote p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.9;
+}
+
+/* ===== PRACTICE CARDS ===== */
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 640px) { .practice-grid { grid-template-columns: 1fr; } }
+
+.practice-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 1.4rem 1.6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.practice-card::after {
+  content: attr(data-num);
+  position: absolute;
+  bottom: -0.5rem;
+  right: 0.8rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: rgba(0,0,0,0.03);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.practice-card.her-practice { background: var(--her-pale); border-color: var(--her-border); }
+.practice-card.him-practice { background: var(--him-pale); border-color: var(--him-border); }
+.practice-card.both-practice { background: var(--bg-card); }
+
+.practice-who {
+  font-size: 0.62rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  font-family: 'Lato', sans-serif;
+}
+
+.practice-who.her { color: var(--her); }
+.practice-who.him { color: var(--him); }
+.practice-who.both { color: var(--ink-muted); }
+
+.practice-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.practice-card p {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+
+/* ===== TIMELINE ===== */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--her-light), var(--him-light));
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding-left: 1.2rem;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -1.6rem;
+  top: 0.55rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+}
+
+.tl-item.active::before {
+  background: linear-gradient(135deg, var(--her-light), var(--him-light));
+  border-color: transparent;
+}
+
+.tl-years {
+  font-size: 0.68rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 0.3rem;
+  font-family: 'Lato', sans-serif;
+}
+
+.tl-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.tl-pillars {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tl-pillar {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  font-size: 0.85rem;
+}
+
+.tl-pillar.her-p { background: var(--her-pale); color: var(--her); border: 1px solid var(--her-border); }
+.tl-pillar.him-p { background: var(--him-pale); color: var(--him); border: 1px solid var(--him-border); }
+
+.tl-desc {
+  font-size: 0.93rem;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 3rem 0 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 5rem;
+}
+
+.footer-names {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 0.8rem;
+}
+
+.footer-names .her { color: var(--her); }
+.footer-names .him { color: var(--him); }
+
+.footer p {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  line-height: 2;
+}
+
+/* Tags */
+.tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+.tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.08rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  color: var(--ink-muted);
+  background: var(--bg-section);
+  font-family: 'Lato', sans-serif;
+}
+.tag.her-tag { border-color: var(--her-border); color: var(--her); background: var(--her-pale); }
+.tag.him-tag { border-color: var(--him-border); color: var(--him); background: var(--him-pale); }
+.tag.both-tag { border-color: var(--border); color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-content">
+    <span class="hero-cn">合 婚 命 理</span>
+    <div class="hero-names">
+      <span class="hero-name her">She</span>
+      <span class="hero-symbol">✦</span>
+      <span class="hero-name him">He</span>
+    </div>
+    <div class="hero-title">Couples Four Pillars · Saju Compatibility Reading</div>
+    <div class="hero-identity">
+      <div class="id-tag">
+        <span class="id-chinese her">辛丑</span>
+        <div class="id-label">Yin Metal · Ox · Aug 4, 1990</div>
+      </div>
+      <div class="id-tag" style="color:rgba(255,255,255,0.2); font-size:2rem; padding-top:0.5rem;">×</div>
+      <div class="id-tag">
+        <span class="id-chinese him">戊申</span>
+        <div class="id-label">Yang Earth · Monkey · Apr 8, 1991</div>
+      </div>
+    </div>
+    <div class="hero-divider"><span>Earth Produces Metal</span></div>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-item" href="#elemental">Elements</a>
+    <a class="nav-item" href="#strengths">Strengths</a>
+    <a class="nav-item" href="#shadows">Shadows</a>
+    <a class="nav-item" href="#dynamic">Dynamic</a>
+    <a class="nav-item" href="#growth">Growth</a>
+    <a class="nav-item" href="#timeline">Timeline</a>
+    <a class="nav-item" href="#practices">Practices</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ===== SECTION 0: COMPATIBILITY OVERVIEW ===== -->
+<div class="section" id="overview">
+  <div class="section-header">
+    <span class="section-num">一</span>
+    <div class="section-title-wrap">
+      <div class="section-title">The Bond at a Glance</div>
+      <div class="section-subtitle">Earth &amp; Metal · 土金相生 · The Mountain and the Jewel</div>
+    </div>
+  </div>
+
+  <div class="compat-grid">
+    <div class="compat-item">
+      <div class="compat-label">Elemental Bond</div>
+      <div class="compat-score high">生</div>
+      <div class="compat-desc">Earth produces Metal<br>He sustains her by nature</div>
+    </div>
+    <div class="compat-item">
+      <div class="compat-label">Day Master Harmony</div>
+      <div class="compat-score high">強</div>
+      <div class="compat-desc">Strong · Mountain &amp; Jewel<br>fundamentally compatible</div>
+    </div>
+    <div class="compat-item">
+      <div class="compat-label">Shared Absence</div>
+      <div class="compat-score grow">補</div>
+      <div class="compat-desc">Both lack Fire &amp; Water<br>must cultivate together</div>
+    </div>
+    <div class="compat-item">
+      <div class="compat-label">Career Alignment</div>
+      <div class="compat-score high">合</div>
+      <div class="compat-desc">Both builders by nature<br>parallel ambition tracks</div>
+    </div>
+    <div class="compat-item">
+      <div class="compat-label">Current Decade</div>
+      <div class="compat-score mid">轉</div>
+      <div class="compat-desc">Different pillars now<br>converging strongly in 40s</div>
+    </div>
+    <div class="compat-item">
+      <div class="compat-label">Long-Term Arc</div>
+      <div class="compat-score high">久</div>
+      <div class="compat-desc">This is a pairing built<br>to deepen over decades</div>
+    </div>
+  </div>
+
+  <div class="center-card">
+    <h4>The Core Relationship Dynamic</h4>
+    <p>In Five Elements, <span class="hl-him">Earth (戊) produces Metal (辛)</span> — this is the most nurturing relationship possible between two Day Masters. He is, by his fundamental nature, the ground from which she emerges. The mountain creates the conditions in which the jewel forms. This is not a dynamic of one person serving the other — it is a natural complementarity in which <span class="hl-both">his stability enables her brilliance, and her refinement gives purpose and direction to his solidity.</span></p>
+    <p>Metal is what Earth produces as its finest expression. When you are at your best together, he is the bedrock that gives her the security to shine at full intensity, and she is the luminous output that makes all his patient mountain-building feel meaningful. <span class="hl-her">She shows him what they are building toward.</span> <span class="hl-him">He shows her it is safe to build.</span></p>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: ELEMENTAL ===== -->
+<div class="section" id="elemental">
+  <div class="section-header">
+    <span class="section-num">二</span>
+    <div class="section-title-wrap">
+      <div class="section-title">Elemental Comparison</div>
+      <div class="section-subtitle">Where you are strong, weak, and what you share</div>
+    </div>
+  </div>
+
+  <div class="element-comparison">
+    <div style="display:grid; grid-template-columns: 1fr 60px 1fr; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.65rem; letter-spacing: 0.2rem; text-transform: uppercase; color: var(--ink-muted); font-family: 'Lato', sans-serif;">
+      <div style="text-align:right; color:var(--her);">HER (辛)</div>
+      <div></div>
+      <div style="text-align:left; color:var(--him);">HIM (戊)</div>
+    </div>
+
+    <!-- Fire -->
+    <div class="elem-row">
+      <div class="elem-label her-label">
+        <div style="font-weight:400;">4 · Dominant</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">Fire attacks Metal</div>
+      </div>
+      <div class="bar-wrap her-bar-wrap">
+        <div class="dot her-dot"></div>
+        <div class="dot her-dot"></div>
+        <div class="dot her-dot"></div>
+        <div class="dot her-dot"></div>
+      </div>
+      <div class="elem-name">火 Fire</div>
+      <div class="bar-wrap him-bar-wrap">
+        <div class="dot empty-him"></div>
+        <div class="dot empty-him"></div>
+        <div class="dot empty-him"></div>
+        <div class="dot empty-him"></div>
+      </div>
+      <div class="elem-label him-label">
+        <div style="font-weight:400;">0 · Absent</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">needs Fire to warm Earth</div>
+      </div>
+    </div>
+
+    <!-- Earth -->
+    <div class="elem-row">
+      <div class="elem-label her-label">
+        <div>2 · Supportive</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">Earth feeds her Metal</div>
+      </div>
+      <div class="bar-wrap her-bar-wrap">
+        <div class="dot her-dot"></div>
+        <div class="dot her-dot"></div>
+        <div class="dot empty-her"></div>
+        <div class="dot empty-her"></div>
+      </div>
+      <div class="elem-name">土 Earth</div>
+      <div class="bar-wrap him-bar-wrap">
+        <div class="dot him-dot"></div>
+        <div class="dot him-dot"></div>
+        <div class="dot him-dot"></div>
+        <div class="dot empty-him"></div>
+      </div>
+      <div class="elem-label him-label">
+        <div>3 · Dominant</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">His Day Master element</div>
+      </div>
+    </div>
+
+    <!-- Metal -->
+    <div class="elem-row">
+      <div class="elem-label her-label">
+        <div>2 · Present</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">Her Day Master element</div>
+      </div>
+      <div class="bar-wrap her-bar-wrap">
+        <div class="dot her-dot"></div>
+        <div class="dot her-dot"></div>
+        <div class="dot empty-her"></div>
+        <div class="dot empty-her"></div>
+      </div>
+      <div class="elem-name">金 Metal</div>
+      <div class="bar-wrap him-bar-wrap">
+        <div class="dot him-dot"></div>
+        <div class="dot him-dot"></div>
+        <div class="dot him-dot"></div>
+        <div class="dot empty-him"></div>
+      </div>
+      <div class="elem-label him-label">
+        <div>3 · Strong</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">Output of his Earth</div>
+      </div>
+    </div>
+
+    <!-- Water -->
+    <div class="elem-row">
+      <div class="elem-label her-label">
+        <div style="color: var(--fire);">0 · Absent</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">critically needed</div>
+      </div>
+      <div class="bar-wrap her-bar-wrap">
+        <div class="dot empty-her"></div>
+        <div class="dot empty-her"></div>
+        <div class="dot empty-her"></div>
+        <div class="dot empty-her"></div>
+      </div>
+      <div class="elem-name">水 Water</div>
+      <div class="bar-wrap him-bar-wrap">
+        <div class="dot empty-him"></div>
+        <div class="dot empty-him"></div>
+        <div class="dot empty-him"></div>
+        <div class="dot empty-him"></div>
+      </div>
+      <div class="elem-label him-label">
+        <div style="color: var(--fire);">0 · Absent</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">critically needed</div>
+      </div>
+    </div>
+
+    <!-- Wood -->
+    <div class="elem-row">
+      <div class="elem-label her-label">
+        <div>0 · Absent</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">needs Wood energy</div>
+      </div>
+      <div class="bar-wrap her-bar-wrap">
+        <div class="dot empty-her"></div>
+        <div class="dot empty-her"></div>
+        <div class="dot empty-her"></div>
+        <div class="dot empty-her"></div>
+      </div>
+      <div class="elem-name">木 Wood</div>
+      <div class="bar-wrap him-bar-wrap">
+        <div class="dot him-dot"></div>
+        <div class="dot him-dot"></div>
+        <div class="dot empty-him"></div>
+        <div class="dot empty-him"></div>
+      </div>
+      <div class="elem-label him-label">
+        <div>2 · Challenging</div>
+        <div style="font-size:0.65rem; color:var(--ink-muted);">Wood attacks his Earth</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="center-card">
+    <h4>What the Elements Tell Us About You as a Pair</h4>
+    <p>The most striking pattern in a combined reading: <span class="hl-both">neither of you has Water, and neither of you has Fire.</span> You share the exact same elemental absences. This means you are not each other's elemental remedy — you cannot simply rely on the relationship itself to provide what each chart is missing. You must consciously and actively cultivate Water (rest, emotional depth, flow, release) and Fire (joy, warmth, expression, connection) as a couple — through your shared environment, practices, friendships, and lifestyle choices.</p>
+    <p>He has Wood (2) that she entirely lacks — meaning <span class="hl-him">his Wood energy can serve as a bridge</span>, bringing some of that vital growth and challenge into her life indirectly. She has dominant Fire (4) that he entirely lacks — meaning <span class="hl-her">her Fire lights up the relationship</span> with intensity, passion, and forward momentum that his cooler Earth nature wouldn't generate alone. In this way, you do provide each other with something essential — but it takes awareness to channel it constructively rather than letting it become friction.</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: STRENGTHS ===== -->
+<div class="section" id="strengths">
+  <div class="section-header">
+    <span class="section-num">三</span>
+    <div class="section-title-wrap">
+      <div class="section-title">Combined Strengths</div>
+      <div class="section-subtitle">What you are extraordinary at together</div>
+    </div>
+  </div>
+
+  <div class="quote both-quote">
+    <p>The mountain shelters the jewel from wind.<br>The jewel reveals what the mountain is made of.</p>
+  </div>
+
+  <div class="dual">
+    <div class="card her-card">
+      <div class="card-who her">Her · 辛 Yin Metal</div>
+      <h4>What She Brings to the Partnership</h4>
+      <p>Acute perceptiveness — she sees what needs to change, what is off, what could be better, often before he does. The creative and aesthetic vision that gives form to what they're building together. An intensity and passion (four Fire) that keeps the relationship vivid and alive. The precision and quality standards that elevate everything they touch. The ability to articulate what both are feeling, when she accesses it.</p>
+      <div class="tag-row">
+        <span class="tag her-tag">Vision</span>
+        <span class="tag her-tag">Precision</span>
+        <span class="tag her-tag">Aesthetic intelligence</span>
+        <span class="tag her-tag">Emotional intensity</span>
+      </div>
+    </div>
+    <div class="card him-card">
+      <div class="card-who him">Him · 戊 Yang Earth</div>
+      <h4>What He Brings to the Partnership</h4>
+      <p>Immovable stability — she never has to wonder if the ground will disappear. The patient, long-range thinking that turns vision into enduring reality. A natural capacity to carry weight and manage pressure without broadcasting distress. Deep, earned loyalty that doesn't waver under difficulty. The Monkey's clever problem-solving that finds practical routes through every obstacle she identifies.</p>
+      <div class="tag-row">
+        <span class="tag him-tag">Stability</span>
+        <span class="tag him-tag">Loyalty</span>
+        <span class="tag him-tag">Long-range thinking</span>
+        <span class="tag him-tag">Problem-solving</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="center-card">
+    <h4>Your Greatest Shared Strengths as a Team</h4>
+    <p><span class="hl-both">Building things that last.</span> Metal and Earth together are the classic combination of the architect and the builder — you have both the vision for quality and the foundation for permanence. Whatever you build together — a home, a family, a business, a life — tends to be substantial, well-made, and designed to endure. You don't cut corners; you don't settle for temporary. This is a rare alignment.</p>
+    <p><span class="hl-both">Complementary intelligence.</span> Her 辛 Metal's analytical sharpness and his Monkey's clever agility create a partnership where between the two of you, very few problems stay unsolved. She identifies what's wrong or what's possible; he engineers the path. The combination of precision (Metal) and structural ingenuity (Earth + Monkey) is genuinely formidable.</p>
+    <p><span class="hl-both">Resilience under pressure.</span> Both charts are built for endurance — she through the Fire that forges rather than melts her, he through the mountain that weathers everything. As a couple, you don't fold when difficulty arrives. This is one of your most important shared gifts, particularly as your 30s and 40s bring real-world complexity.</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: SHADOWS ===== -->
+<div class="section" id="shadows">
+  <div class="section-header">
+    <span class="section-num">四</span>
+    <div class="section-title-wrap">
+      <div class="section-title">Shared Shadows &amp; Tensions</div>
+      <div class="section-subtitle">Where you both need awareness and honest work</div>
+    </div>
+  </div>
+
+  <div class="dual">
+    <div class="card her-card">
+      <div class="card-who her">Her Shadow</div>
+      <h4>Perfectionism as a weapon</h4>
+      <p>Her 辛 Metal's precision, amplified by four Fire, can turn inward as relentless self-criticism — and outward as impossible standards for him. She sees flaws with extraordinary clarity. The work is learning when to deploy that precision as a gift rather than as judgment. He is a mountain, not a gemstone; he is not built to be polished — he is built to support. Accepting the difference is essential.</p>
+    </div>
+    <div class="card him-card">
+      <div class="card-who him">His Shadow</div>
+      <h4>Emotional unavailability</h4>
+      <p>His 戊 Earth carries silently. No Fire in his chart means joy and expressiveness don't come automatically; no Water means emotional depth stays hidden in the Monkey and Dragon. He can be so reliably present in practical terms that his emotional absence goes unspoken for long stretches — until the accumulation becomes pressure. The mountain that never speaks its interior eventually creates distance, not safety.</p>
+    </div>
+  </div>
+
+  <div class="dual">
+    <div class="card her-card">
+      <div class="card-who her">Her Relational Edge</div>
+      <h4>Anxiety as a climate</h4>
+      <p>Her chart runs hot — the four Fire pressing constantly on Yin Metal creates a background hum of internal pressure that, when unmanaged, becomes ambient anxiety in the relationship. He is steady enough to absorb this — but absorption is not healing. When her inner pressure isn't being processed, it becomes the weather of the relationship rather than her private experience. He needs her to have her own outlets, not to use his steadiness as her only pressure valve.</p>
+    </div>
+    <div class="card him-card">
+      <div class="card-who him">His Relational Edge</div>
+      <h4>Rigidity at pivot moments</h4>
+      <p>Mountains do not pivot easily. His 戊 Earth's greatest strength — immovability — becomes the relationship's friction point in moments that genuinely require flexibility, adaptation, or a change of direction. The 七殺 star that drives his ambition can also manifest as an unwillingness to be challenged or redirected, especially by someone whose precision he respects but whose Fire he can experience as destabilizing. Learning to distinguish necessary stability from defensive stubbornness is his relational growth edge.</p>
+    </div>
+  </div>
+
+  <div class="center-card">
+    <h4>The Shared Shadow: The Water Drought</h4>
+    <p>This is the single most important pattern to understand in your combined chart: <span class="hl-both">neither of you generates Water energy naturally.</span> Water in Five Elements governs emotional flow, rest, intuition, depth, vulnerability, and the ability to let things move through you rather than accumulate. Without Water, both of you tend toward <span class="hl-both">suppression, productivity-as-avoidance, and a relationship dynamic that is more functional than intimate.</span></p>
+    <p>You can build a magnificent life together — and still find, in quiet moments, that you haven't spoken about what's actually true for either of you in months. The relationship can run on loyalty and shared purpose while emotional nourishment quietly drains. This is the drought you must actively irrigate. It requires no dramatic intervention — just consistent, conscious tending: regular conversations about inner life, physical affection, slowing down together, and the permission to be soft rather than strong in each other's presence.</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: DYNAMIC ===== -->
+<div class="section" id="dynamic">
+  <div class="section-header">
+    <span class="section-num">五</span>
+    <div class="section-title-wrap">
+      <div class="section-title">Your Relationship Dynamic</div>
+      <div class="section-subtitle">How you move together · 陰陽相合</div>
+    </div>
+  </div>
+
+  <div class="center-card">
+    <h4>The Mountain &amp; The Jewel: How Your Energies Interact</h4>
+    <p>She brings the heat and the sharpness — the Fire-driven intensity and Metal precision that defines goals, identifies problems, and drives relentlessly toward quality. He brings the ground — the patient, structural, absorptive stability that keeps the enterprise from flying apart. <span class="hl-both">Left to their natural rhythms, she sets the direction and he makes it possible.</span> This works beautifully when both are conscious of it. It creates resentment when she feels she is carrying all the vision and he feels he is carrying all the weight.</p>
+    <p>The healthiest version of this dynamic is one where <span class="hl-her">she learns to receive his Earth support as an act of love</span> — not as complacency — and where <span class="hl-him">he learns to voice his inner world enough</span> that she doesn't have to translate his silence alone. She is better at naming things; he is better at holding them. Together you cover what neither can do alone.</p>
+  </div>
+
+  <div class="dual">
+    <div class="card her-card">
+      <div class="card-who her">Her Role in the Dynamic</div>
+      <h4>The Spark and the Compass</h4>
+      <p>She is the one who sees clearly — what is working, what isn't, what is possible. Her Fire generates momentum and her Metal gives it precision. In the relationship's natural ecosystem, she tends to be the one who initiates growth, raises difficult truths, and sets the quality standard for what they're building. The risk is carrying this role alone until it becomes exhaustion. She needs him to co-navigate, not just follow.</p>
+    </div>
+    <div class="card him-card">
+      <div class="card-who him">His Role in the Dynamic</div>
+      <h4>The Ground and the Builder</h4>
+      <p>He is the one who makes it real — who translates vision into structure, who absorbs the shocks, who is still there when the energy fades. His Earth sustains the conditions in which her Metal can express itself fully. The risk is becoming so identified with the supporting role that his own inner life — desires, fears, dreams — becomes invisible. The mountain has a summit and a view. He needs to share it.</p>
+    </div>
+  </div>
+
+  <div class="center-card">
+    <h4>What This Pairing Does Exceptionally Well</h4>
+    <p><span class="hl-both">High-stakes moments.</span> When real difficulty arrives — financial crisis, health challenges, family pressure, major decisions — this pairing does not collapse. Her Fire-Metal combination produces clear-headed intensity under pressure; his Earth produces steadiness without panic. You make good decisions under duress because you balance each other's response styles: she cuts through to what matters, he holds the structure together while she does.</p>
+    <p><span class="hl-both">Long-term projects.</span> Anything that requires both vision and endurance — raising children, building a home, growing a career, creative work with a long horizon — plays to the combined strengths of this pairing. You are not a short-burst couple. You compound over time. The longer and deeper the project, the more your complementarity becomes your advantage.</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: GROWTH ===== -->
+<div class="section" id="growth">
+  <div class="section-header">
+    <span class="section-num">六</span>
+    <div class="section-title-wrap">
+      <div class="section-title">Growth Edges &amp; How to Improve</div>
+      <div class="section-subtitle">Concrete areas for deepening the bond</div>
+    </div>
+  </div>
+
+  <div class="center-card">
+    <h4>The Three Elemental Prescriptions for This Pairing</h4>
+    <p>Every couple's chart points toward specific elemental medicines — things to cultivate together that address what the combined chart is missing. For this pairing, the prescriptions are clear and consistent: <span class="hl-both">Water, Fire, and Flow.</span></p>
+  </div>
+
+  <div class="practice-grid">
+
+    <div class="practice-card both-practice" data-num="1">
+      <div class="practice-who both">Both · Most Urgent</div>
+      <h4>Cultivate Water Together</h4>
+      <p>Make rest a shared value, not a reward for completion. Water energy is built through: slow evenings with no agenda, physical closeness that is nurturing rather than productive, conversations that begin with "how are you actually feeling" and mean it, time near actual water (ocean, lake, bath), and the consistent practice of letting things be unfinished. Schedule nothing on some weekends. Let the silence be generative.</p>
+    </div>
+
+    <div class="practice-card both-practice" data-num="2">
+      <div class="practice-who both">Both · Emotional Architecture</div>
+      <h4>Build Structures for Emotional Expression</h4>
+      <p>Neither of you will do this spontaneously — the charts simply don't generate it naturally. So make it structural: a weekly 20-minute check-in where each person answers "what was hard, what was good, what do I need." No problem-solving allowed, just listening. The mountain and the jewel both need containers to express themselves. Build the container deliberately or the expression won't come.</p>
+    </div>
+
+    <div class="practice-card her-practice" data-num="3">
+      <div class="practice-who her">For Her · The Jewel's Work</div>
+      <h4>Let the Mountain Be a Mountain</h4>
+      <p>Her 辛 Metal precision will always see what could be better in him — in the house, in the relationship, in his decisions. The growth practice is learning to discern: is this a genuine concern or is this the anxiety of my over-fired chart looking for an outlet? The mountain doesn't need constant polishing. Practice saying the things that are right and true about him as often as you note what could improve. His Earth genuinely nourishes you — receiving that without immediately redirecting it is its own discipline.</p>
+    </div>
+
+    <div class="practice-card him-practice" data-num="4">
+      <div class="practice-who him">For Him · The Mountain's Work</div>
+      <h4>Speak the Interior</h4>
+      <p>His greatest relational growth practice is simple and consistently difficult: say what is true on the inside before it becomes invisible even to himself. This doesn't require emotional fluency — it requires commitment. Once per day, name one thing that is happening internally. Not a report on actions taken, not a plan, not a solution — an inner state. "I'm tired in a way that isn't physical." "I felt proud today and didn't say it." "I'm worried about X." The mountain that speaks its inner landscape becomes home, not just shelter.</p>
+    </div>
+
+    <div class="practice-card her-practice" data-num="5">
+      <div class="practice-who her">For Her · Managing the Fire</div>
+      <h4>Create Personal Pressure Valves</h4>
+      <p>Her four Fire and zero Water means the internal pressure in her chart needs regular, intentional release — and that release cannot only flow toward him. Develop outlets that are entirely hers: creative work, physical movement, a close female friendship, therapy, journaling, time alone in silence. The relationship needs her to bring a cooled version of her fire — not dimmed, but processed. When she arrives already emptied of what doesn't belong to him, the intensity she brings becomes illuminating rather than overwhelming.</p>
+    </div>
+
+    <div class="practice-card him-practice" data-num="6">
+      <div class="practice-who him">For Him · Embracing Flexibility</div>
+      <h4>Practice Chosen Change</h4>
+      <p>His 戊 Earth's rigidity is most dangerous when it operates unconsciously — when he resists without knowing he's resisting, or holds a position past the point where it's serving the relationship rather than his own sense of solidity. The growth practice is learning to distinguish between genuine stability (valuable) and reflexive immovability (defended). Once a month: change something voluntarily. Take a different route. Agree to her idea before editing it. Let her plan the weekend entirely. Practice the posture of openness so that when real flexibility is required, the muscle already exists.</p>
+    </div>
+
+    <div class="practice-card both-practice" data-num="7">
+      <div class="practice-who both">Both · The Wealth of Shared Joy</div>
+      <h4>Build a Fire Practice</h4>
+      <p>Fire = joy, play, spontaneity, warmth, laughter, celebration. Neither chart generates it automatically as a resting state — but her chart has it in abundance as activated energy, and his chart is capable of warming deeply once sparked. Protect time that is purely for delight with no productivity attached: dancing, cooking a new dish together, watching something that makes you laugh, traveling somewhere unfamiliar, celebrating small wins with genuine ceremony. Joy is not the reward for completing the to-do list. It is the fire that keeps the forge burning.</p>
+    </div>
+
+    <div class="practice-card both-practice" data-num="8">
+      <div class="practice-who both">Both · Long-Range</div>
+      <h4>Co-author Your Future Deliberately</h4>
+      <p>Both of your charts are long-game charts — you think in years, not weeks. Use that. Once a year, sit together and actually speak the 5-year vision: not just financial or career goals, but what you want the texture of your daily life to feel like, what you want your relationship to be known for, what you want to have built together. Then identify one concrete thing each of you will do differently this year to move toward that. You are both builders — make sure you are building the same thing.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== SECTION 6: TIMELINE ===== -->
+<div class="section" id="timeline">
+  <div class="section-header">
+    <span class="section-num">七</span>
+    <div class="section-title-wrap">
+      <div class="section-title">Shared Decade Timeline</div>
+      <div class="section-subtitle">How your luck pillars align through life</div>
+    </div>
+  </div>
+
+  <div class="center-card" style="margin-bottom:2rem;">
+    <h4>Reading the Combined Timeline</h4>
+    <p>Each person's luck pillars create the elemental weather of their decade. When read together, the combined timeline reveals periods of natural alignment, productive tension, and shared opportunity. The most important insight: <span class="hl-both">your 40s together represent a profound convergence</span> — both of you will be in Water-adjacent pillars simultaneously, finally providing the emotional depth and restoration that both charts have always lacked.</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-years">~2019–2026 · Her 29–35 / Him 28–35</div>
+      <div class="tl-title">The Building Decade — Different Speeds, Same Direction</div>
+      <div class="tl-pillars">
+        <span class="tl-pillar her-p">甲辰 Her: Yang Wood / Dragon</span>
+        <span class="tl-pillar him-p">辛丑 Him: Yin Metal / Ox</span>
+      </div>
+      <div class="tl-desc">She is in her peak Wealth decade — Yang Wood / Dragon bringing financial and career flourishing, direct wealth accumulation, and professional recognition. He is in a consolidation decade — Yin Metal / Ox, doing the disciplined foundational work that will pay out in the 庚子 pillar ahead. This period can feel like she is accelerating while he is grinding — it's not inequality, it's timing. His Ox decade's careful building is exactly what will make their joint future possible. The tension to navigate: her pace versus his pace, and trusting that you're building the same thing even when the timelines feel misaligned.</div>
+    </div>
+
+    <div class="tl-item active">
+      <div class="tl-years">~2027–2028 · Her 36–38 / Him 36–37 · KEY TRANSITION</div>
+      <div class="tl-title">The Convergence Window — Both Moving into Water</div>
+      <div class="tl-pillars">
+        <span class="tl-pillar her-p">癸卯 Her: Yin Water / Rabbit</span>
+        <span class="tl-pillar him-p">庚子 Him: Yang Metal / Rat</span>
+      </div>
+      <div class="tl-desc">A major shift arrives for both of you nearly simultaneously. She enters 癸卯 — her first significant Water pillar, bringing emotional depth, wisdom, creative mastery, and peace. He enters 庚子 — bringing Yang Water (his Wealth star) and the financial breakthrough that his Ox decade prepared. For the first time, both charts have Water flowing. This is the period where the relationship is most likely to feel genuinely nourished — not just functional. Intimacy deepens. Financial security establishes. The work of your 30s begins to pay off visibly and tangibly. This window is precious: invest in the relationship, not just the career.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-years">~2028–2038 · Her 38–48 / Him 37–47</div>
+      <div class="tl-title">Peak Years — Aligned and Flourishing</div>
+      <div class="tl-pillars">
+        <span class="tl-pillar her-p">癸卯 Her: Yin Water / Rabbit</span>
+        <span class="tl-pillar him-p">庚子 Him: Yang Metal / Rat</span>
+      </div>
+      <div class="tl-desc">Your 40s together are the most aligned decade of your combined timeline. Her wisdom and creative depth is at its richest. His financial and professional peak is in full expression. Both are Water-adjacent — finally providing the rest, depth, and emotional nourishment the combined chart has always needed. This is the decade to make memories, deepen the relationship, and enjoy what you've built. The grinding years are behind you. Don't spend these years still grinding.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-years">~2038–2048 · Her 48–58 / Him 47–57</div>
+      <div class="tl-title">Deepening — Inward Turn and Legacy</div>
+      <div class="tl-pillars">
+        <span class="tl-pillar her-p">壬寅 Her: Yang Water / Tiger</span>
+        <span class="tl-pillar him-p">己亥 Him: Yin Earth / Pig</span>
+      </div>
+      <div class="tl-desc">Both pillars carry Water energy. She is in Yang Water / Tiger — authority, institutional recognition, deep wisdom at peak expression. He is in Yin Earth / Pig — the Pig carries Water and marks the beginning of a philosophical, legacy-oriented phase. In your 50s together, the relationship transitions from building to meaning-making. What have you built, and what does it stand for? This is the decade where contribution, mentorship, and shared legacy become as important as individual achievement.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-years">~2048–2058 · Her 58–68 / Him 57–67</div>
+      <div class="tl-title">The Return — Essence and Warmth</div>
+      <div class="tl-pillars">
+        <span class="tl-pillar her-p">辛丑 Her: Yin Metal / Ox</span>
+        <span class="tl-pillar him-p">戊戌 Him: Yang Earth / Dog</span>
+      </div>
+      <div class="tl-desc">She returns to her own Day Pillar — a profound homecoming to essence and authenticity. He enters 戊戌, his own Day Master doubled — the mountain in full elder expression, with Fire finally arriving in the Dog's hidden stems. For the first time, Fire enters his chart through luck. This is a decade where both of you are most fully yourselves — stripped of striving, resting in what remains. The relationship in your 60s becomes the most authentic version of itself. This is what you have been building toward.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== SECTION 7: PRACTICES SUMMARY ===== -->
+<div class="section" id="practices">
+  <div class="section-header">
+    <span class="section-num">八</span>
+    <div class="section-title-wrap">
+      <div class="section-title">The Essential Synthesis</div>
+      <div class="section-subtitle">What to remember above all else</div>
+    </div>
+  </div>
+
+  <div class="quote both-quote">
+    <p>You are not opposites seeking balance.<br>You are a mountain and the jewel it produces —<br>the same substance, expressed differently,<br>each made more meaningful by the other.</p>
+  </div>
+
+  <div class="center-card">
+    <h4>The Five Commitments of This Pairing</h4>
+    <p><span class="hl-both">1. Water is your shared medicine.</span> Rest together. Slow down together. Give each other permission to not be productive. Make emotional depth a regular practice, not an emergency response. This single commitment will do more for your relationship than any other.</p>
+    <p><span class="hl-both">2. She lights the direction; he builds the road.</span> This is your natural division of gifts — honor it without resentment. It is not burden, it is complementarity. The issue arises only when either role is taken for granted. Name what each other contributes, often and specifically.</p>
+    <p><span class="hl-both">3. His silence is not his answer.</span> She reads accurately and deeply — but she cannot read what he hasn't said. The work of this relationship requires him to translate the mountain's interior into language, regularly. Not because she demands it, but because the relationship requires it to stay alive.</p>
+    <p><span class="hl-both">4. Her fire is a gift, not a threat.</span> The intensity, the precision, the drive to improve — this is what makes her extraordinary, and it is what she brings into the relationship. His work is to distinguish between her Fire's creative heat and its anxious heat, and to respond to the former with engagement rather than defensive immovability.</p>
+    <p><span class="hl-both">5. Your 40s are the reward for your 30s.</span> You are both in building decades right now — doing hard, necessary, foundational work that doesn't always feel like it's paying off. It is. The convergence ahead is real. Don't sacrifice the relationship's nourishment in order to build the life faster. The life and the relationship are the same project.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-names">
+    <span class="her">辛丑 · She · Aug 4, 1990</span>
+    &nbsp;✦&nbsp;
+    <span class="him">戊申 · He · Apr 8, 1991</span>
+  </div>
+  <p>Combined Four Pillars of Destiny Reading · 合婚命理<br>
+  Solar Calendar · Monterey Park, CA & Whittier, CA<br><br>
+  命理是指引，非命運。 · Destiny reading is guidance, not fate.</p>
+</div>
+
+</div><!-- end .page -->
+</body>
+</html>
