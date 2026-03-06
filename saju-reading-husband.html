@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四柱命理 · Saju Reading</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f3f5f0;
+    --bg-card: #ffffff;
+    --bg-section: #f8faf6;
+    --ink: #141c10;
+    --ink-soft: #2e3d28;
+    --ink-muted: #5a6e52;
+    --green: #3a6b2a;
+    --green-mid: #558044;
+    --green-accent: #7aaa5c;
+    --green-light: #c2ddb0;
+    --border: #bdd1ac;
+    --border-light: #d8eacc;
+    --fire: #b03020;
+    --earth-col: #8a6a10;
+    --metal-col: #4a6070;
+    --water-col: #1a5c8a;
+    --wood-col: #3a6b2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 10% 10%, rgba(90,160,50,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 90% 85%, rgba(60,110,40,0.05) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    text-align: center;
+    padding: 4rem 0 2.5rem;
+    position: relative;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+
+  .header::before, .header::after {
+    content: '✦';
+    position: absolute;
+    color: var(--green-accent);
+    font-size: 1.2rem;
+  }
+  .header::before { left: 0; top: 4.5rem; }
+  .header::after { right: 0; top: 4.5rem; }
+
+  .chinese-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 0.5rem;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .english-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+  .divider span { color: var(--green-accent); font-size: 0.9rem; }
+
+  .birth-info {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    letter-spacing: 0.08rem;
+  }
+
+  /* ===== PILLARS TABLE ===== */
+  .pillars-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 16px rgba(40,80,20,0.07);
+  }
+
+  .section-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.4rem;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .pillar {
+    background: var(--bg-section);
+    padding: 1.8rem 1rem;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .pillar:hover { background: #f0f7eb; }
+
+  .pillar-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.25rem;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1rem;
+    font-family: 'EB Garamond', serif;
+  }
+
+  .pillar-chinese {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 2.8rem;
+    line-height: 1;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .pillar-stem { color: var(--ink); }
+  .pillar-branch { color: var(--ink-soft); }
+
+  .pillar-romanized {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    margin: 0.6rem 0 0.3rem;
+    font-style: italic;
+  }
+
+  .pillar-element {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+  }
+
+  .fire-color   { color: #b03020; }
+  .earth-color  { color: #7a5810; }
+  .metal-color  { color: #3a5a68; }
+  .water-color  { color: #1a5280; }
+  .wood-color   { color: #2e5e20; }
+
+  .pillar-animal { font-size: 1.3rem; margin-top: 0.8rem; }
+
+  .pillar.day-master {
+    background: #f5fbf2;
+    border-top: 3px solid var(--green-accent);
+  }
+
+  .day-master-badge {
+    font-size: 0.62rem;
+    letter-spacing: 0.2rem;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+    display: block;
+    font-weight: 600;
+  }
+
+  /* ===== ELEMENT BARS ===== */
+  .element-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 1.5rem 0;
+  }
+
+  .element-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .element-name {
+    width: 80px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-fire   { background: linear-gradient(to right, #901808, #c0392b); }
+  .bar-earth  { background: linear-gradient(to right, #6a4808, #b8861a); }
+  .bar-metal  { background: linear-gradient(to right, #2a4858, #4a7888); }
+  .bar-water  { background: linear-gradient(to right, #0a3858, #1a6aaa); }
+  .bar-wood   { background: linear-gradient(to right, #1e4812, #3a8028); }
+
+  .bar-count {
+    width: 24px;
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+
+  /* ===== CONTENT SECTIONS ===== */
+  .content-section {
+    margin: 3rem 0;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .content-section:nth-child(2) { animation-delay: 0.08s; }
+  .content-section:nth-child(3) { animation-delay: 0.16s; }
+  .content-section:nth-child(4) { animation-delay: 0.24s; }
+  .content-section:nth-child(5) { animation-delay: 0.32s; }
+  .content-section:nth-child(6) { animation-delay: 0.40s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .section-number {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.4rem;
+    color: var(--green-accent);
+    line-height: 1;
+    min-width: 1.8rem;
+  }
+
+  .section-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .section-title-cn {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.15rem;
+  }
+
+  .content-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-left: 3px solid var(--green-accent);
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 1.2rem;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .content-block h4 {
+    font-size: 0.75rem;
+    letter-spacing: 0.35rem;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 0.9rem;
+    font-weight: 600;
+  }
+
+  .content-block p {
+    font-size: 1.08rem;
+    line-height: 1.9;
+    color: var(--ink-soft);
+  }
+
+  .content-block p + p { margin-top: 0.9rem; }
+
+  .highlight-text {
+    color: var(--green);
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  /* ===== LUCK PILLARS ===== */
+  .luck-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 1.5rem 0;
+  }
+
+  .luck-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 1rem 0.6rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .luck-card:hover {
+    background: #f0f7eb;
+    border-color: var(--green-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40,100,20,0.1);
+  }
+
+  .luck-card.active {
+    border-color: var(--green-accent);
+    border-width: 2px;
+    background: #f0f7eb;
+  }
+
+  .luck-card.active::before {
+    content: 'NOW';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.55rem;
+    letter-spacing: 0.15rem;
+    background: var(--green-accent);
+    color: #fff;
+    padding: 2px 7px;
+    font-weight: 600;
+    border-radius: 2px;
+  }
+
+  .luck-age {
+    font-size: 0.6rem;
+    color: var(--ink-muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .luck-chinese {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.6rem;
+    color: var(--ink);
+    display: block;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  .luck-pinyin {
+    font-size: 0.68rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin: 0.4rem 0 0.2rem;
+  }
+
+  .luck-element {
+    font-size: 0.6rem;
+    color: var(--ink-muted);
+  }
+
+  /* ===== DECADE DETAILS ===== */
+  .decade-detail {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    padding: 1.6rem 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    border-radius: 3px;
+  }
+
+  .decade-detail::before {
+    content: attr(data-decade);
+    position: absolute;
+    top: -0.55rem;
+    left: 1.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2rem;
+    color: var(--green);
+    background: var(--bg-card);
+    padding: 0 0.6rem;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .decade-detail h4 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+
+  .decade-detail p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--ink-soft);
+  }
+
+  .decade-detail.active-decade {
+    border-color: var(--green-accent);
+    border-width: 2px;
+    background: #f5fbf2;
+  }
+
+  .decade-detail.active-decade::before {
+    background: #f5fbf2;
+    color: var(--green);
+  }
+
+  /* ===== TAGS ===== */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+  }
+
+  .tag {
+    font-size: 0.8rem;
+    letter-spacing: 0.08rem;
+    padding: 0.25rem 0.8rem;
+    border: 1px solid var(--border);
+    color: var(--ink-soft);
+    border-radius: 2px;
+    background: var(--bg-section);
+  }
+
+  .tag.earth  { border-color: #b8861a; color: #7a5810; background: #fdf8ee; }
+  .tag.metal  { border-color: #4a7888; color: #2a4858; background: #f0f5f8; }
+  .tag.wood   { border-color: var(--green-accent); color: var(--green); background: #f0f7eb; }
+  .tag.fire   { border-color: #c0392b; color: #901808; background: #fdf0ee; }
+
+  /* ===== TWO COL ===== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ===== QUOTE ===== */
+  .quote-block {
+    border: 1px solid var(--border);
+    background: var(--bg-section);
+    padding: 1.8rem 2rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    position: relative;
+    border-radius: 3px;
+  }
+  .quote-block::before {
+    content: '❝';
+    position: absolute;
+    top: -0.8rem;
+    left: 1.5rem;
+    font-size: 1.8rem;
+    color: var(--green-accent);
+    background: var(--bg-section);
+    padding: 0 0.3rem;
+    line-height: 1;
+  }
+  .quote-block p {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    line-height: 2;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 3rem 0 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 4rem;
+  }
+
+  .footer p {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 2;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 650px) {
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    .luck-grid    { grid-template-columns: repeat(2, 1fr); }
+    .chinese-title { font-size: 2rem; }
+    .page { padding: 2rem 1.2rem 4rem; }
+  }
+
+  /* Hidden stems box */
+  .hidden-stems {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 1rem 0;
+  }
+  .hs-box {
+    background: var(--bg-section);
+    border: 1px solid var(--border-light);
+    padding: 0.8rem 0.6rem;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .hs-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.15rem;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.4rem;
+  }
+  .hs-chars {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    color: var(--green);
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span class="chinese-title">四 柱 命 理</span>
+    <div class="english-title">Four Pillars of Destiny · Saju Reading</div>
+    <div class="divider"><span>✦</span></div>
+    <div class="birth-info">April 8, 1991 · 3:59 AM · Whittier, California · Male</div>
+    <div class="birth-info" style="margin-top:0.4rem; font-size:0.85rem; opacity:0.75;">Solar Calendar · 辛未年 甲辰月 戊申日 庚寅時</div>
+  </div>
+
+  <!-- FOUR PILLARS TABLE -->
+  <div class="pillars-section content-section">
+    <div class="section-label">The Four Pillars · 四柱</div>
+    <div class="pillars-grid">
+
+      <div class="pillar">
+        <div class="pillar-label">Hour · 時柱</div>
+        <span class="pillar-chinese pillar-stem metal-color">庚</span>
+        <span class="pillar-chinese pillar-branch wood-color">寅</span>
+        <div class="pillar-romanized">Gēng Yín</div>
+        <div class="pillar-element metal-color">Yang Metal</div>
+        <div class="pillar-element wood-color">Yang Wood</div>
+        <div class="pillar-animal">🐯</div>
+      </div>
+
+      <div class="pillar day-master">
+        <div class="pillar-label">Day · 日柱</div>
+        <span class="pillar-chinese pillar-stem earth-color">戊</span>
+        <span class="pillar-chinese pillar-branch metal-color">申</span>
+        <div class="pillar-romanized">Wù Shēn</div>
+        <div class="pillar-element earth-color">Yang Earth</div>
+        <div class="pillar-element metal-color">Yang Metal</div>
+        <div class="pillar-animal">🐒</div>
+        <span class="day-master-badge">Day Master</span>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-label">Month · 月柱</div>
+        <span class="pillar-chinese pillar-stem wood-color">甲</span>
+        <span class="pillar-chinese pillar-branch earth-color">辰</span>
+        <div class="pillar-romanized">Jiǎ Chén</div>
+        <div class="pillar-element wood-color">Yang Wood</div>
+        <div class="pillar-element earth-color">Yang Earth</div>
+        <div class="pillar-animal">🐉</div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-label">Year · 年柱</div>
+        <span class="pillar-chinese pillar-stem metal-color">辛</span>
+        <span class="pillar-chinese pillar-branch earth-color">未</span>
+        <div class="pillar-romanized">Xīn Wèi</div>
+        <div class="pillar-element metal-color">Yin Metal</div>
+        <div class="pillar-element earth-color">Yin Earth</div>
+        <div class="pillar-animal">🐐</div>
+      </div>
+
+    </div>
+
+    <!-- Hidden Stems -->
+    <div style="margin-top:1.5rem;">
+      <div class="section-label" style="margin-bottom:0.8rem;">Hidden Stems (藏干) · What lies beneath each branch</div>
+      <div class="hidden-stems">
+        <div class="hs-box">
+          <div class="hs-label">Tiger 寅</div>
+          <div class="hs-chars">甲 丙 戊</div>
+          <div style="font-size:0.6rem; color:var(--ink-muted); margin-top:0.3rem;">Wood · Fire · Earth</div>
+        </div>
+        <div class="hs-box">
+          <div class="hs-label">Monkey 申</div>
+          <div class="hs-chars">庚 壬 戊</div>
+          <div style="font-size:0.6rem; color:var(--ink-muted); margin-top:0.3rem;">Metal · Water · Earth</div>
+        </div>
+        <div class="hs-box">
+          <div class="hs-label">Dragon 辰</div>
+          <div class="hs-chars">戊 乙 癸</div>
+          <div style="font-size:0.6rem; color:var(--ink-muted); margin-top:0.3rem;">Earth · Wood · Water</div>
+        </div>
+        <div class="hs-box">
+          <div class="hs-label">Goat 未</div>
+          <div class="hs-chars">己 丁 乙</div>
+          <div style="font-size:0.6rem; color:var(--ink-muted); margin-top:0.3rem;">Earth · Fire · Wood</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELEMENT BALANCE -->
+  <div class="pillars-section content-section" style="margin-top:1.5rem;">
+    <div class="section-label">Elemental Constitution · 五行分析</div>
+    <div class="element-bars">
+      <div class="element-row">
+        <div class="element-name wood-color">Wood 木</div>
+        <div class="bar-track"><div class="bar-fill bar-wood" style="width:25%"></div></div>
+        <div class="bar-count wood-color">2</div>
+      </div>
+      <div class="element-row">
+        <div class="element-name fire-color">Fire 火</div>
+        <div class="bar-track"><div class="bar-fill bar-fire" style="width:0%"></div></div>
+        <div class="bar-count fire-color">0</div>
+      </div>
+      <div class="element-row">
+        <div class="element-name earth-color">Earth 土</div>
+        <div class="bar-track"><div class="bar-fill bar-earth" style="width:37%"></div></div>
+        <div class="bar-count earth-color">3</div>
+      </div>
+      <div class="element-row">
+        <div class="element-name metal-color">Metal 金</div>
+        <div class="bar-track"><div class="bar-fill bar-metal" style="width:37%"></div></div>
+        <div class="bar-count metal-color">3</div>
+      </div>
+      <div class="element-row">
+        <div class="element-name water-color">Water 水</div>
+        <div class="bar-track"><div class="bar-fill bar-water" style="width:0%"></div></div>
+        <div class="bar-count water-color">0</div>
+      </div>
+    </div>
+
+    <div class="content-block" style="margin-top:1.5rem;">
+      <h4>Reading the Balance</h4>
+      <p>This chart is built on a foundation of <span class="highlight-text">Earth and Metal</span> — solid, structured, reliable, and quietly powerful. Earth (3) is the dominant force, anchored by the Day Master 戊 Yang Earth. Metal (3) flows naturally from Earth, reinforcing an output-oriented nature. Wood (2) appears in the Month and Hour pillars, creating the primary tension in the chart: Wood directly attacks Earth, which means the chart experiences productive pressure — challenges that ultimately sharpen rather than break. <span class="highlight-text">Fire and Water are entirely absent</span>, making these the most important corrective elements: Fire would warm the Earth and generate more Metal output, while Water would nourish Wood and create a flowing outlet for Metal's precision.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 1: PERSONALITY -->
+  <div class="content-section">
+    <div class="section-header">
+      <span class="section-number">一</span>
+      <div>
+        <div class="section-title">Personality &amp; Character</div>
+        <div class="section-title-cn">性格分析</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>戊土 — the great mountain, the vast plateau, the earth that does not move.<br>Immovable not from stubbornness, but from depth.</p>
+    </div>
+
+    <div class="content-block">
+      <h4>The Day Master · 戊 Yang Earth</h4>
+      <p>Your Day Master is 戊 (Wù), Yang Earth — the mountain, the dam, the fertile plain that sustains all life. Where Yin Earth 己 is the garden soil, adaptable and yielding, Yang Earth is bedrock: vast, patient, immensely strong, and profoundly dependable. 戊 Earth people carry within them a natural gravity — people are drawn to them for stability, for counsel, for the sense that things will not collapse while they are present.</p>
+      <p>You are characteristically <span class="highlight-text">reliable, principled, steadfast, and quietly authoritative</span>. You do not need to assert yourself loudly — your presence does the work. There is a natural magnanimity to 戊 Earth: a generosity of spirit, a willingness to bear weight for others, and a long-range patience that outlasts nearly everyone around you. You think in years, not weeks.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="content-block">
+        <h4>Strengths</h4>
+        <p>Enormous endurance and resilience — like a mountain under weather. Natural trustworthiness; people instinctively confide in you. Strategic, long-range thinking. Exceptional loyalty to those you commit to. A calm under pressure that others find stabilizing. The ability to carry heavy loads — responsibility, duty, expectation — without complaint.</p>
+        <div class="tag-row">
+          <span class="tag earth">Steadfastness</span>
+          <span class="tag earth">Reliability</span>
+          <span class="tag metal">Precision</span>
+          <span class="tag wood">Endurance</span>
+        </div>
+      </div>
+      <div class="content-block">
+        <h4>Shadow &amp; Challenges</h4>
+        <p>The mountain's greatest weakness is rigidity — 戊 Earth can become immovable when flexibility is needed. With Wood attacking Earth in your chart, you may experience periods of deep internal conflict between your desire for stability and external forces pushing for change. Stubbornness, resistance to adaptation, and difficulty releasing control are the shadow sides to tend. The absence of Fire and Water can also create emotional flatness or suppression.</p>
+        <div class="tag-row">
+          <span class="tag earth">Rigidity</span>
+          <span class="tag fire">Emotional suppression</span>
+          <span class="tag">Over-caution</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h4>The Monkey Day Branch (申) · Your Inner World</h4>
+      <p>Your Day Branch is 申 (Monkey) — Yang Metal, clever, agile, inventive, and strategically brilliant. The Monkey is the most mentally quick and resourceful of the twelve animals. Inside the mountain exterior of 戊 Earth, there is a sharp, nimble, problem-solving intelligence that surprises people who expect only steadiness from you. The Monkey's hidden stems are 庚 (Yang Metal), 壬 (Yang Water), and 戊 (Yang Earth) — meaning deep within you there are reserves of <span class="highlight-text">Water (hidden emotional depth and intuition)</span> that rarely surface but are genuinely present. The Monkey is also associated with technical skill, mechanical aptitude, and the ability to find solutions others miss.</p>
+    </div>
+
+    <div class="content-block">
+      <h4>The Tiger Hour (庚寅) · Your Public Face &amp; Drive</h4>
+      <p>Born in the 寅 Tiger hour with 庚 Yang Metal — the Hour Pillar represents your outward presentation, your ambitions, and in some traditions your later life energy. The Tiger is bold, independent, courageous, and natural-born leader material. 庚 Yang Metal adds a cutting precision and decisive quality to this boldness. You project <span class="highlight-text">quiet confidence, capability, and authority</span> — people sense you are someone who gets things done. The Tiger also creates a subtle tension with the Monkey (Day Branch): Tiger and Monkey are in a mild clash position (寅申冲), which internally manifests as conflict between your stable mountain nature and your restless, ambitious Tiger drive. This tension is generative — it is why you keep moving and building even when you could rest.</p>
+    </div>
+
+    <div class="content-block">
+      <h4>The Dragon Month (甲辰) · Your Foundation &amp; Family Legacy</h4>
+      <p>The Month Pillar governs career, parents, and the formative conditions of early life. 甲 Yang Wood in the Month stem means Wood — the element that challenges your Day Master — is asserting itself most strongly in the domain of career and social role. This is the 七殺 (Seven Killings) star for 戊 Earth: a powerful, demanding force that, when mastered, becomes the source of extraordinary achievement and leadership. People with 七殺 in the Month often work in high-pressure fields, rise to positions of authority through demonstrated competence under fire, and carry themselves with the earned gravity of someone who has navigated real adversity. The Dragon branch beneath adds Earth, Wood, and hidden Water — grounding the energy and providing structural support.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CAREERS -->
+  <div class="content-section">
+    <div class="section-header">
+      <span class="section-number">二</span>
+      <div>
+        <div class="section-title">Ideal Careers &amp; Life Path</div>
+        <div class="section-title-cn">事業方向</div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h4>The 七殺 Star &amp; Career Profile</h4>
+      <p>The 七殺 (Seven Killings) star is the most powerful career indicator in a Saju chart — when it appears prominently and is controlled (which it is here, stabilized by Earth's abundance), it produces people of extraordinary drive, leadership, and achievement. This is the star of generals, surgeons, executives, athletes, and visionary entrepreneurs. <span class="highlight-text">You are not built for a quiet corner.</span> You are built to lead, to build, to take on challenges others step back from. The question is never whether you can handle difficulty — the question is whether you are directing your considerable force toward something worthy of it.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="content-block">
+        <h4>Highest Resonance Fields</h4>
+        <p><strong style="color:var(--ink)">Engineering &amp; Construction</strong> — Earth and Metal together are the classic combination of the builder and the architect. Structural, civil, mechanical engineering all align deeply.</p>
+        <p style="margin-top:0.8rem"><strong style="color:var(--ink)">Finance &amp; Real Estate</strong> — Yang Earth governs land, property, and foundations. An instinct for value, assets, and long-term investment is embedded in your Day Master.</p>
+        <p style="margin-top:0.8rem"><strong style="color:var(--ink)">Military, Law Enforcement, Security</strong> — The 七殺 star and Tiger Hour create a natural aptitude for discipline, strategy, and command in high-stakes environments.</p>
+        <p style="margin-top:0.8rem"><strong style="color:var(--ink)">Medicine &amp; Surgery</strong> — The Monkey's hidden Metal and Water give precise, technical hands and a cool analytical mind in pressure situations.</p>
+      </div>
+      <div class="content-block">
+        <h4>Strong Resonance Fields</h4>
+        <p><strong style="color:var(--ink)">Technology &amp; Systems</strong> — The Monkey's cleverness combined with Metal precision creates an exceptional systems thinker. Software architecture, infrastructure, cybersecurity.</p>
+        <p style="margin-top:0.8rem"><strong style="color:var(--ink)">Executive Leadership</strong> — Any organizational structure benefits from the mountain's gravitational authority. You build teams that function because people trust you.</p>
+        <p style="margin-top:0.8rem"><strong style="color:var(--ink)">Entrepreneurship</strong> — The 七殺 mastered becomes the Entrepreneur star. Your risk tolerance under the right conditions is high, and your long-range patience outlasts most competitors.</p>
+        <p style="margin-top:0.8rem"><strong style="color:var(--ink)">Agriculture, Land, Resource Management</strong> — Earth's most literal domains; a deep affinity for working with the physical world.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h4>Career Cautions</h4>
+      <p>The greatest career risk for 戊 Earth with a dominant 七殺 is <span class="highlight-text">choosing power over meaning</span> — taking on roles because you can handle them, rather than because they align with your deeper values. The mountain can bear enormous weight, but it should choose its burdens wisely. Environments that are purely bureaucratic, where initiative is punished and mediocrity is rewarded, will make you quietly miserable. You need <span class="highlight-text">challenge, autonomy, and the ability to build something that lasts.</span> Also watch for the tendency to take on more than your share — your reliability makes you a magnet for other people's problems. Setting clear scope boundaries is a lifelong skill to cultivate.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3: RELATIONSHIPS -->
+  <div class="content-section">
+    <div class="section-header">
+      <span class="section-number">三</span>
+      <div>
+        <div class="section-title">Relationships &amp; Love</div>
+        <div class="section-title-cn">感情分析</div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h4>The Spouse Palace · Day Branch 申 Monkey</h4>
+      <p>The Day Branch (申 Monkey) represents the Spouse Palace — the energetic template of your most intimate partnerships. The Monkey is clever, independent, playful, multi-faceted, and intellectually stimulating. You are drawn to partners who are <span class="highlight-text">sharp, intellectually engaging, quick-witted, and capable</span> — someone who can match your depth with their agility. The Monkey also carries hidden Water, suggesting you need, at some level, a partner who brings emotional fluency, intuition, and warmth that your Earth-dominant nature doesn't naturally generate for itself.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="content-block">
+        <h4>What You Need</h4>
+        <p>A partner who respects your need for stability without mistaking it for stagnation. Someone who is independently capable — you are attracted to competence and self-sufficiency. Intellectual stimulation; you need a mind that interests you. Loyalty above almost everything else. Space to be the quiet anchor without being taken for granted. Emotional expression from your partner that gives you permission to access your own hidden depths.</p>
+      </div>
+      <div class="content-block">
+        <h4>What You Offer</h4>
+        <p>Unwavering loyalty — once committed, the mountain does not move. A partner who will never have to wonder where you stand. Practical, grounded love — you show care through action, provision, and presence rather than words. An extraordinary capacity to weather difficulty together without panic. Safety: the sense that whatever storms come, you will not abandon ship. And beneath the mountain, hidden warmth — the fire stored deep in Earth that emerges slowly and burns long.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h4>The 正財 Star · Direct Wealth in Relationships</h4>
+      <p>For 戊 Yang Earth, Yin Water (癸) is the 正財 (Direct Wealth) star — and in Saju, the Wealth star also represents the wife/female partner for a man. The absence of Water in the birth chart means the 正財 star is not present in your four pillars themselves — it must arrive through luck pillars and annual years. This can indicate that finding and sustaining the right partnership requires conscious, active effort and timing rather than effortless early arrival. The <span class="highlight-text">壬寅 luck pillar (ages 16–25)</span> brought Water — a formative period for significant relationships. As you move through your current and future pillars, Water energy activating through annual years continues to be the key to deepening intimacy.</p>
+    </div>
+
+    <div class="content-block">
+      <h4>The Tiger–Monkey Dynamic in Love</h4>
+      <p>The 寅申冲 (Tiger-Monkey clash) between your Hour and Day pillars creates an internal tension that can surface in relationships as a push-pull between your <span class="highlight-text">desire for independence and your desire for deep commitment</span>. The Tiger in you wants freedom, movement, and its own domain; the Monkey wants cleverness and variety; the mountain of 戊 wants permanence and roots. Partners who understand that this internal tension exists — and who don't take the Tiger's restlessness personally — will find an extraordinarily loyal and devoted partner in you. Partners who try to cage either the Tiger or the Monkey will trigger withdrawal.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4: HEALTH -->
+  <div class="content-section">
+    <div class="section-header">
+      <span class="section-number">四</span>
+      <div>
+        <div class="section-title">Health &amp; Vitality</div>
+        <div class="section-title-cn">健康分析</div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h4>Elemental Health Map</h4>
+      <p>In Five Element medicine: <span class="earth-color">Earth governs the Spleen, Stomach, and digestive system</span>. With Earth dominant and Wood challenging it, the primary health vulnerabilities are in <span class="highlight-text">digestion, gut health, and the musculoskeletal system</span> (tendons, ligaments — Wood governs these). <span class="metal-color">Metal governs the Lungs and Large Intestine</span> — strong Metal suggests respiratory function is generally robust, but when Metal is over-produced by Earth, there can be stagnation in the large intestine or skin issues. <span class="water-color">Water (absent) governs the Kidneys, adrenals, and bones</span> — this is the second major area of vulnerability. Without Water, the kidneys and adrenal system may be chronically under-resourced, particularly during high-stress periods.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="content-block">
+        <h4>Areas of Attention</h4>
+        <p>Digestive system: stomach, spleen, bloating, digestive irregularity — particularly under stress. The musculoskeletal system: joints, ligaments, tendons (Wood attacks Earth = tension in connective tissue). Adrenal fatigue and kidney stress during periods of overwork. Blood pressure and cardiovascular monitoring in mid-life as Earth energy can create blockage. Lower back and knees (governed by Kidney Water, which is absent).</p>
+      </div>
+      <div class="content-block">
+        <h4>Supportive Practices</h4>
+        <p>Water-nourishing lifestyle: adequate sleep (essential for kidney restoration), hydration, kidney-supporting foods (black beans, walnuts, dark leafy greens). Digestive care: warm, cooked foods over raw and cold; mindful eating; stress management as the gut is your most sensitive health indicator. Regular physical movement — the mountain benefits from being active, not sedentary. Stretching and flexibility work to counteract Earth's tendency toward stiffness. Fire cultivation through warmth, joy, and social connection.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h4>Emotional Health Note</h4>
+      <p>The most significant health risk for 戊 Earth is <span class="highlight-text">internalized stress</span>. The mountain carries silently — you will absorb enormous amounts of pressure without visible distress, until the body speaks instead of the voice. The absence of both Fire (joy, expression) and Water (emotional depth, release) means unfelt and unprocessed emotions accumulate in the Earth organs — the stomach and spleen. Digestive symptoms are often your body's first language for things you haven't said. Cultivating practices of emotional expression — conversation, journaling, creative work, therapy — is not optional self-care; for your chart it is preventive medicine.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 5: LUCK PILLARS GRID -->
+  <div class="content-section">
+    <div class="section-header">
+      <span class="section-number">五</span>
+      <div>
+        <div class="section-title">Decade Luck Flow · 大運</div>
+        <div class="section-title-cn">十年大運</div>
+      </div>
+    </div>
+
+    <div class="content-block" style="margin-bottom:1.5rem;">
+      <h4>Reading the Luck Pillars</h4>
+      <p>For a male born in a Yin year (辛未 · Yin Metal Goat), the Luck Pillars flow in <strong style="color:var(--ink)">reverse</strong> — backward through the 60 Jiazi cycle. The first pillar activates at approximately <strong style="color:var(--ink)">age 6</strong> (18 days from birth back to 春分 Vernal Equinox, divided by 3). Each pillar governs approximately ten years of life, providing the overarching elemental weather for that era.</p>
+    </div>
+
+    <div class="luck-grid">
+      <div class="luck-card">
+        <div class="luck-age">Age 6–15 · 1997–2006</div>
+        <span class="luck-chinese water-color">癸卯</span>
+        <div class="luck-pinyin">Guǐ Mǎo</div>
+        <div class="luck-element water-color">Yin Water</div>
+        <div class="luck-element wood-color">/ Rabbit</div>
+      </div>
+      <div class="luck-card">
+        <div class="luck-age">Age 16–25 · 2007–2016</div>
+        <span class="luck-chinese water-color">壬寅</span>
+        <div class="luck-pinyin">Rén Yín</div>
+        <div class="luck-element water-color">Yang Water</div>
+        <div class="luck-element wood-color">/ Tiger</div>
+      </div>
+      <div class="luck-card active">
+        <div class="luck-age">Age 26–35 · 2017–2026</div>
+        <span class="luck-chinese metal-color">辛丑</span>
+        <div class="luck-pinyin">Xīn Chǒu</div>
+        <div class="luck-element metal-color">Yin Metal</div>
+        <div class="luck-element earth-color">/ Ox</div>
+      </div>
+      <div class="luck-card">
+        <div class="luck-age">Age 36–45 · 2027–2036</div>
+        <span class="luck-chinese metal-color">庚子</span>
+        <div class="luck-pinyin">Gēng Zǐ</div>
+        <div class="luck-element metal-color">Yang Metal</div>
+        <div class="luck-element water-color">/ Rat</div>
+      </div>
+      <div class="luck-card">
+        <div class="luck-age">Age 46–55 · 2037–2046</div>
+        <span class="luck-chinese earth-color">己亥</span>
+        <div class="luck-pinyin">Jǐ Hài</div>
+        <div class="luck-element earth-color">Yin Earth</div>
+        <div class="luck-element water-color">/ Pig</div>
+      </div>
+    </div>
+    <div class="luck-grid" style="margin-top:8px;">
+      <div class="luck-card">
+        <div class="luck-age">Age 56–65 · 2047–2056</div>
+        <span class="luck-chinese earth-color">戊戌</span>
+        <div class="luck-pinyin">Wù Xū</div>
+        <div class="luck-element earth-color">Yang Earth / Dog</div>
+      </div>
+      <div class="luck-card">
+        <div class="luck-age">Age 66–75 · 2057–2066</div>
+        <span class="luck-chinese fire-color">丁酉</span>
+        <div class="luck-pinyin">Dīng Yǒu</div>
+        <div class="luck-element fire-color">Yin Fire</div>
+        <div class="luck-element metal-color">/ Rooster</div>
+      </div>
+      <div class="luck-card">
+        <div class="luck-age">Age 76–85 · 2067–2076</div>
+        <span class="luck-chinese fire-color">丙申</span>
+        <div class="luck-pinyin">Bǐng Shēn</div>
+        <div class="luck-element fire-color">Yang Fire</div>
+        <div class="luck-element metal-color">/ Monkey</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: DECADE DETAILS -->
+  <div class="content-section">
+    <div class="section-header">
+      <span class="section-number">六</span>
+      <div>
+        <div class="section-title">Decade-by-Decade Interpretation</div>
+        <div class="section-title-cn">逐運詳解</div>
+      </div>
+    </div>
+
+    <div class="decade-detail" data-decade="Age 6–15 · 1997–2006">
+      <h4>癸卯 · Yin Water / Rabbit</h4>
+      <p>The opening luck pillar immediately brings the two most absent elements in the birth chart: Water (癸) and Wood (卯 Rabbit). For 戊 Earth, 癸 Yin Water is the <span class="highlight-text">正財 Direct Wealth star</span> — and it arrives in childhood and early adolescence. This is unusual and significant: themes of value, resource, and perhaps financial awareness arrive very early. The Rabbit's Wood further pressures Earth, making these formative years ones of challenge, adjustment, and development of resilience. This decade likely included experiences that required growing up faster than peers, navigating difficult environments, or developing self-reliance early. Academically and intellectually, the Water stimulus sharpens the mind. Emotionally, learning to process rather than bury became an early curriculum.</p>
+    </div>
+
+    <div class="decade-detail" data-decade="Age 16–25 · 2007–2016">
+      <h4>壬寅 · Yang Water / Tiger</h4>
+      <p>壬 Yang Water is the <span class="highlight-text">偏財 Indirect Wealth star</span> for 戊 Earth — representing entrepreneurial energy, social charisma, unexpected financial opportunities, and dynamic social life. The Tiger (寅) activates the 寅申冲 clash with your Day Branch Monkey, making this a decade of significant movement, upheaval, and transformation. The late teens through mid-twenties were likely turbulent and electric — perhaps marked by bold decisions, sudden changes of direction, intense relationships, and the development of your own independent path. Financial opportunism, risk-taking, and social expansion are themes. This is the decade where the ambitious Tiger in you and the clever Monkey compete most visibly. The Water energy also brings emotional opening — a period where feelings could be accessed more readily than before or after.</p>
+    </div>
+
+    <div class="decade-detail active-decade" data-decade="Age 26–35 · 2017–2026 · CURRENT">
+      <h4>辛丑 · Yin Metal / Ox ← You are here</h4>
+      <p>This is a decade of <span class="highlight-text">consolidation, building, and earning</span>. 辛 Yin Metal is the 傷官 (Hurting Officer) star for 戊 Earth — a complex and powerful star associated with brilliance, unconventional thinking, creative intelligence, and the ability to challenge and overcome authority. People with active 傷官 are often the ones who build new systems rather than climb existing ones. This energy pushes you to <strong style="color:var(--ink)">think differently, innovate, and express your capabilities</strong> in ways that may not fit conventional molds. The Ox (丑) beneath is steady, persistent, and hardworking — providing the disciplined foundation for whatever the 辛 Metal spark is creating.</p>
+      <p>The Ox also carries hidden Metal and Water — bringing subtle emotional depth and the seeds of the Wealth energy that fully blooms in the next decade. This current decade is about <span class="highlight-text">building skills, establishing credibility, and doing the foundational work</span> that will translate into significant material success in your late 30s and 40s. Be careful not to mistake the hard work of this period for the destination — you are building the mountain's base. The view comes later.</p>
+    </div>
+
+    <div class="decade-detail" data-decade="Age 36–45 · 2027–2036">
+      <h4>庚子 · Yang Metal / Rat</h4>
+      <p>A major transition and one of the most powerful decades of your life. 庚 Yang Metal continues the Output star energy, but now at Yang intensity — bold, decisive, productive. The Rat (子) carries Yang Water — the 偏財 Indirect Wealth star arrives again, now supported by everything you've built in your 辛丑 decade. This is the period of <span class="highlight-text">financial breakthrough, professional peak, and significant material accumulation</span>. The Rat also forms a partial combination with your Dragon (Month Branch), activating the Dragon's hidden Water and strengthening the wealth and intelligence energy throughout the chart. Career recognition, financial independence, and perhaps your most ambitious undertaking begin here. The Rat's Water also finally begins to provide the emotional nourishment and depth that your chart has long needed — expect a deepening of intimacy and self-understanding in these years.</p>
+    </div>
+
+    <div class="decade-detail" data-decade="Age 46–55 · 2037–2046">
+      <h4>己亥 · Yin Earth / Pig</h4>
+      <p>己 Yin Earth is the 劫財 (Rob Wealth) star — a complex energy that represents competition, partnership, shared resources, and the testing of financial wisdom. In your 40s, this may manifest as business partnerships, joint ventures, or resource-sharing arrangements that require careful navigation. The key is choosing collaborators wisely and maintaining clear financial boundaries. The Pig (亥) carries Yang Water — more Wealth energy arriving, now deepened by maturity. The Pig is also associated with wisdom, depth, and the spiritual dimension of life. This decade begins a turn inward — achievement has been established; now what does it mean? Philosophical deepening, contribution to something larger, and the beginning of legacy thinking.</p>
+    </div>
+
+    <div class="decade-detail" data-decade="Age 56–65 · 2047–2056">
+      <h4>戊戌 · Yang Earth / Dog</h4>
+      <p>A mirror of your own Day Master — 戊 Yang Earth returns. This decade represents a deep <span class="highlight-text">return to essence and authenticity</span>. The Dog (戌) carries Earth, Metal, and hidden Fire — and notably, Fire finally arrives in strength for the first time in your luck flow. This is a decade of warmth, earned wisdom, and the quiet authority of a mountain that has weathered everything and still stands. You become, in your late 50s and early 60s, exactly what you were always meant to be: the elder, the anchor, the one others look to. The hidden Fire in the Dog also brings a late-life vitality and warmth — a kindling of joy and expressiveness that earlier decades may not have permitted.</p>
+    </div>
+
+    <div class="decade-detail" data-decade="Age 66–75 · 2057–2066">
+      <h4>丁酉 · Yin Fire / Rooster</h4>
+      <p>丁 Yin Fire is the <span class="highlight-text">正印 (Direct Resource/Seal) star</span> for 戊 Earth — representing wisdom, knowledge, mother energy, protection, and deep inner support. Fire warms Earth and makes it truly fertile. The 正印 star in later life is the mark of someone who has become a repository of wisdom — a teacher, an elder, a source. The Rooster (酉) brings refined Metal. This is a decade of <span class="highlight-text">intellectual and spiritual flourishing</span>, of being sought out for guidance, and of finding that the accumulated experience of a lifetime has become something transmissible. A beautiful decade for mentorship, creative work, and the savoring of what has been built.</p>
+    </div>
+
+  </div>
+
+  <!-- SECTION 7: SYNTHESIS -->
+  <div class="content-section">
+    <div class="section-header">
+      <span class="section-number">七</span>
+      <div>
+        <div class="section-title">Synthesis &amp; Guidance</div>
+        <div class="section-title-cn">總論</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>The mountain does not announce itself.<br>It simply is — and everything finds its way to it.</p>
+    </div>
+
+    <div class="content-block">
+      <h4>Your Chart's Core Teaching</h4>
+      <p>You were born as the mountain — vast, grounded, capable of bearing enormous weight. Your chart is a chart of <span class="highlight-text">substance over appearance, longevity over flash, and earned authority over inherited position</span>. The Wood that challenges your Earth is not your enemy — it is the force that keeps you from becoming inert. Without Wood's challenge, the mountain would never be carved into something beautiful. Every significant challenge in your life has served to reveal more of what you are made of.</p>
+      <p>The two great practices for your chart: <strong style="color:var(--ink)">(1)</strong> Cultivate Fire — warmth, joy, expression, and connection. Let yourself be seen, not just relied upon. Speak the internal landscape. The mountain that expresses its fire does not diminish — it glows. <strong style="color:var(--ink)">(2)</strong> Tend the Water — rest, emotional flow, depth of inner life. The hidden Water in your Monkey and Dragon is real; it needs pathways to the surface. Relationships, creativity, and stillness are your water wells.</p>
+    </div>
+
+    <div class="content-block">
+      <h4>Years of Particular Significance</h4>
+      <p><span class="highlight-text">Water years</span> (Rat, Pig years) activate Wealth energy — financially and relationally important years. <span class="highlight-text">Metal years</span> (Monkey, Rooster, Ox) reinforce the Output star — years of productivity, expression, and creative or professional output. <span class="highlight-text">Earth years</span> (Dragon, Ox, Dog, Goat) reinforce the Day Master — steady, consolidating years. <span class="highlight-text">Wood years</span> (Tiger, Rabbit) activate the 七殺 challenge energy — years of pressure that generate breakthrough if met directly. <span class="highlight-text">Fire years</span> (Horse, Snake) bring the 印星 resource/wisdom energy — nourishing, supportive years that replenish what Wood and Metal expend. You are currently finishing the 辛丑 pillar — the 2025–2026 window as you approach the transition to 庚子 is a particularly important juncture for positioning the next decade's foundation.</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>This reading is based on the Four Pillars of Destiny (四柱命理) tradition.<br>
+    April 8, 1991 · 3:59 AM · Whittier, California · Solar Calendar<br>
+    Year 辛未 · Month 甲辰 · Day 戊申 · Hour 庚寅<br><br>
+    命理是指引，非命運。 · Destiny reading is guidance, not fate.</p>
+  </div>
+
+</div>
+</body>
+</html>
